@@ -751,8 +751,6 @@ h2 {
 }
 
 .nl-map .state-region.selected {
-  stroke: #263640 !important;
-  stroke-width: 1.4 !important;
   opacity: 1;
 }
 
