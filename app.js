@@ -824,13 +824,15 @@ function renderStatus() {
   }
 
   ui.selectedTags.replaceChildren(
-    ...selectedTopics.slice(0, 12).map((topic) => {
-      const tag = document.createElement("span");
-      tag.className = "tag";
-      tag.textContent = topic.letter;
-      tag.title = topic.name;
-      return tag;
-    })
+    ...(selectedTopics.length <= 8
+      ? selectedTopics.map((topic) => {
+          const tag = document.createElement("span");
+          tag.className = "tag";
+          tag.textContent = topic.letter;
+          tag.title = topic.name;
+          return tag;
+        })
+      : [])
   );
 }
 
