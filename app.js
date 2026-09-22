@@ -35,6 +35,7 @@ const PLAYER_STORAGE_KEY = "nl-waterwerken-speler";
 const MODE_STORAGE_KEY = "nl-waterwerken-modus";
 const HARD_TOPICS_STORAGE_KEY = "nl-waterwerken-moeilijke-onderdelen";
 const SVG_NS = "http://www.w3.org/2000/svg";
+const APP_VERSION = "1.2.0";
 
 const batches = [
   {
@@ -847,6 +848,11 @@ ui.searchInput.addEventListener("input", (event) => {
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.getRegistrations().then((regs) => regs.forEach((r) => r.unregister()));
+}
+
+const versionEl = document.querySelector("#appVersion");
+if (versionEl) {
+  versionEl.textContent = `v${APP_VERSION}`;
 }
 
 render();
