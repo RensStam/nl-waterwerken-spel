@@ -44,7 +44,7 @@ const PLAYER_STORAGE_KEY = "nl-waterwerken-speler";
 const MODE_STORAGE_KEY = "nl-waterwerken-modus";
 const HARD_TOPICS_STORAGE_KEY = "nl-waterwerken-moeilijke-onderdelen";
 const SVG_NS = "http://www.w3.org/2000/svg";
-const APP_VERSION = "1.3.0";
+const APP_VERSION = "1.4.0";
 
 const batches = [
   {
@@ -78,6 +78,7 @@ const batchByCode = new Map(
 const ui = {
   batchGrid: document.querySelector("#batchGrid"),
   clearBtn: document.querySelector("#clearBtn"),
+  exitFullscreenBtn: document.querySelector("#exitFullscreenBtn"),
   labelToggle: document.querySelector("#labelToggle"),
   mapGrid: document.querySelector("#mapGrid"),
   playerForm: document.querySelector("#playerForm"),
@@ -440,10 +441,21 @@ function startSessionWith(codes, isReview = false) {
   typingMessage = "";
   ui.typedAnswer.value = "";
   render();
+  enterMobileFullscreenIfNeeded();
 
   if (practiceMode === "type") {
     ui.typedAnswer?.focus();
   }
+}
+
+function enterMobileFullscreenIfNeeded() {
+  if (window.matchMedia("(max-width: 760px)").matches) {
+    document.body.classList.add("round-fullscreen");
+  }
+}
+
+function exitMobileFullscreen() {
+  document.body.classList.remove("round-fullscreen");
 }
 
 function startSession() {
@@ -872,6 +884,7 @@ ui.searchInput.addEventListener("input", (event) => {
   searchTerm = event.target.value;
   renderStateList();
 });
+ui.exitFullscreenBtn?.addEventListener("click", exitMobileFullscreen);
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.getRegistrations().then((regs) => regs.forEach((r) => r.unregister()));

@@ -61,6 +61,9 @@
         </aside>
 
         <section class="play-panel" aria-label="Spel">
+          <button type="button" class="exit-fullscreen-btn" id="exitFullscreenBtn" aria-label="Sluit volledig scherm">
+            ✕ Sluiten
+          </button>
           <div class="quiz-bar">
             <div class="game-actions">
               <div class="mode-control" role="radiogroup" aria-label="Oefenmodus">
@@ -102,17 +105,19 @@
           </div>
 
           <div class="map-shell">
-            <div class="landscape-legend" aria-label="Legenda landschapstypen">
-              <p class="legend-group-title">Fysisch Geografische Regio's (klikbaar, groep 4)</p>
-              <span class="legend-item"><i class="swatch" data-lz="zeeklei"></i>Zeekleigebied</span>
-              <span class="legend-item"><i class="swatch" data-lz="rivierklei"></i>Rivierengebied</span>
-              <span class="legend-item"><i class="swatch" data-lz="laagveen"></i>Laagveengebied</span>
-              <span class="legend-item"><i class="swatch" data-lz="duin"></i>Duinen</span>
-              <span class="legend-item"><i class="swatch" data-lz="zand"></i>Hogere Zandgronden</span>
-              <span class="legend-item"><i class="swatch" data-lz="heuvelland"></i>Heuvelland</span>
-              <span class="legend-item"><i class="swatch" data-lz="zeearm"></i>Afgesloten Zeearmen</span>
-              <span class="legend-item"><i class="swatch" data-lz="getijde"></i>Getijdengebied</span>
-            </div>
+            <details class="landscape-legend">
+              <summary>Legenda landschapstypen (Fysisch Geografische Regio's, klikbaar in groep 4)</summary>
+              <div class="legend-items">
+                <span class="legend-item"><i class="swatch" data-lz="zeeklei"></i>Zeekleigebied</span>
+                <span class="legend-item"><i class="swatch" data-lz="rivierklei"></i>Rivierengebied</span>
+                <span class="legend-item"><i class="swatch" data-lz="laagveen"></i>Laagveengebied</span>
+                <span class="legend-item"><i class="swatch" data-lz="duin"></i>Duinen</span>
+                <span class="legend-item"><i class="swatch" data-lz="zand"></i>Hogere Zandgronden</span>
+                <span class="legend-item"><i class="swatch" data-lz="heuvelland"></i>Heuvelland</span>
+                <span class="legend-item"><i class="swatch" data-lz="zeearm"></i>Afgesloten Zeearmen</span>
+                <span class="legend-item"><i class="swatch" data-lz="getijde"></i>Getijdengebied</span>
+              </div>
+            </details>
             <div class="map-scroll" aria-label="Klikbare kaart van Nederland">
               <div class="real-map" id="mapGrid">
 <svg xmlns="http://www.w3.org/2000/svg" id="nlMap" width="595.275" height="710.387" viewBox="-0.862 -0.555 595.275 710.387" preserveAspectRatio="xMidYMid meet">

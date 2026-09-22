@@ -577,10 +577,6 @@ h2 {
 }
 
 .landscape-legend {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 14px;
   margin-bottom: 8px;
   padding: 8px 12px;
   border: 1px solid var(--line);
@@ -588,6 +584,21 @@ h2 {
   background: #fbfdfd;
   font-size: 0.78rem;
   color: var(--ink);
+}
+
+.landscape-legend summary {
+  cursor: pointer;
+  color: var(--teal-dark);
+  font-weight: 800;
+  list-style: revert;
+}
+
+.landscape-legend .legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  margin-top: 8px;
 }
 
 .legend-group-title {
@@ -980,7 +991,77 @@ h2 {
   }
 }
 
+.exit-fullscreen-btn {
+  display: none;
+}
+
 @media (max-width: 760px) {
+  body.round-fullscreen .side-panel,
+  body.round-fullscreen .topbar,
+  body.round-fullscreen .powered-by,
+  body.round-fullscreen .map-credit {
+    display: none;
+  }
+
+  body.round-fullscreen .app-shell {
+    width: 100%;
+    padding: 0;
+  }
+
+  body.round-fullscreen .play-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: block;
+    border-radius: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body.round-fullscreen .exit-fullscreen-btn {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    min-height: 40px;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--teal-dark);
+    font-weight: 900;
+  }
+
+  body.round-fullscreen .nl-map {
+    min-height: calc(100vh - 260px);
+  }
+
+  body.round-fullscreen #shuffleBtn,
+  body.round-fullscreen #repeatBtn,
+  body.round-fullscreen .toggle-control,
+  body.round-fullscreen .landscape-legend {
+    display: none;
+  }
+
+  body.round-fullscreen .quiz-bar {
+    padding: 8px 10px;
+  }
+
+  body.round-fullscreen .question-area {
+    padding: 9px 11px;
+  }
+
+  body.round-fullscreen .quiz-bar h2 {
+    font-size: 1.1rem;
+  }
+
+  body.round-fullscreen .map-shell {
+    padding: 6px;
+  }
+
   .app-shell {
     width: min(100% - 10px, 1260px);
     padding: 8px 0;
