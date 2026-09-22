@@ -635,7 +635,7 @@ function addTopicLabels() {
 
     const box = element.getBBox();
     const label = document.createElementNS(SVG_NS, "text");
-    label.classList.add("state-label");
+    label.classList.add("state-label", `region-${batchByCode.get(topic.code)}`);
 
     label.setAttribute("data-code", topic.code);
     label.setAttribute("x", String(box.x + box.width / 2));
@@ -713,9 +713,12 @@ function renderMap() {
     element.classList.toggle("hint", isHint);
     element.classList.toggle("typing-target", isTypingTarget);
 
-    mapSvg
-      ?.querySelector(`.state-label[data-code="${topic.code}"]`)
-      ?.classList.toggle("typing-target-label", isTypingTarget);
+    const label = mapSvg?.querySelector(`.state-label[data-code="${topic.code}"]`);
+    label?.classList.toggle("typing-target-label", isTypingTarget);
+    label?.classList.toggle("dimmed-label", !isSelected && selected.size > 0 && !isTypingTarget);
+    label?.classList.toggle("done-label", isDone && !isFeedback);
+    label?.classList.toggle("correct-label", isFeedback && feedback.type === "correct");
+    label?.classList.toggle("wrong-label", (isFeedback && feedback.type === "wrong") || isHint);
   });
 }
 
