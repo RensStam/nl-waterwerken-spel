@@ -643,11 +643,11 @@ h2 {
 }
 
 .swatch[data-lz="zeearm"] {
-  background: #8fc2e6;
+  background: #3a7bbf;
 }
 
 .swatch[data-lz="getijde"] {
-  background: #bcdcf0;
+  background: #5fb8a8;
 }
 
 .map-scroll {
@@ -725,11 +725,11 @@ h2 {
 }
 
 .nl-map .lz-zeearm path {
-  fill: #8fc2e6;
+  fill: #3a7bbf;
 }
 
 .nl-map .lz-getijde path {
-  fill: #bcdcf0;
+  fill: #5fb8a8;
 }
 
 .nl-map .state-region {
