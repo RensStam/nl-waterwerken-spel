@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#2f7f7a"/>
+  <path fill="#9cc8f2" d="M60 300c40-30 80-30 120 0s80 30 120 0 80-30 120 0 80 30 120 0v60c-40 30-80 30-120 0s-80-30-120 0-80 30-120 0-80-30-120 0z"/>
+  <path fill="#f4d66f" d="M120 250l40-90h40l-20 90zM280 250l40-110h40l-20 110z"/>
+  <path fill="#ffffff" d="M96 360h320v26H96z"/>
+  <text x="256" y="440" fill="#ffffff" font-family="Arial, sans-serif" font-size="72" font-weight="800" text-anchor="middle">NL</text>
+</svg>
