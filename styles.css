@@ -856,16 +856,10 @@ h2 {
     fill 160ms ease;
 }
 
-.state-label.region-1 {
-  fill: #1c7a6c;
-}
-
-.state-label.region-2 {
-  fill: #2f5fa6;
-}
-
+.state-label.region-1,
+.state-label.region-2,
 .state-label.region-3 {
-  fill: #a67200;
+  fill: #1c7a6c;
 }
 
 .state-label.region-4 {
