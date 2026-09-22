@@ -638,16 +638,16 @@ h2 {
   background: #f6efb2;
 }
 
-.swatch[data-lz="hoogveen"] {
-  background: #d9637f;
-}
-
-.swatch[data-lz="afgehoogveen"] {
-  background: #f0a8ba;
-}
-
 .swatch[data-lz="heuvelland"] {
   background: #9a6741;
+}
+
+.swatch[data-lz="zeearm"] {
+  background: #8fc2e6;
+}
+
+.swatch[data-lz="getijde"] {
+  background: #bcdcf0;
 }
 
 .map-scroll {
@@ -691,45 +691,98 @@ h2 {
 }
 
 .nl-map .landscape {
-  pointer-events: none;
   clip-path: url(#landClip);
 }
 
 .nl-map .landscape path {
-  stroke: none;
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 0.4;
   opacity: 0.92;
 }
 
-.nl-map .lz-zeeklei {
+.nl-map .lz-zeeklei path {
   fill: #7ab86a;
 }
 
-.nl-map .lz-rivierklei {
+.nl-map .lz-rivierklei path {
   fill: #b7c95a;
 }
 
-.nl-map .lz-laagveen {
+.nl-map .lz-laagveen path {
   fill: #b9a8d9;
 }
 
-.nl-map .lz-duin {
+.nl-map .lz-duin path {
   fill: #f0e35a;
 }
 
-.nl-map .lz-zand {
+.nl-map .lz-zand path {
   fill: #f6efb2;
 }
 
-.nl-map .lz-hoogveen {
-  fill: #d9637f;
-}
-
-.nl-map .lz-afgehoogveen {
-  fill: #f0a8ba;
-}
-
-.nl-map .lz-heuvelland {
+.nl-map .lz-heuvelland path {
   fill: #9a6741;
+}
+
+.nl-map .lz-zeearm path {
+  fill: #8fc2e6;
+}
+
+.nl-map .lz-getijde path {
+  fill: #bcdcf0;
+}
+
+.nl-map .state-region {
+  cursor: pointer;
+  outline: none;
+  transition:
+    opacity 160ms ease,
+    stroke 160ms ease,
+    stroke-width 160ms ease;
+}
+
+.nl-map .state-region:hover,
+.nl-map .state-region:focus {
+  filter: brightness(1.08);
+}
+
+.nl-map .state-region.dimmed {
+  opacity: 0.35;
+}
+
+.nl-map .state-region.selected {
+  stroke: #263640 !important;
+  stroke-width: 1.4 !important;
+  opacity: 1;
+}
+
+.nl-map .state-region.correct {
+  stroke: #2f9f67 !important;
+  stroke-width: 3 !important;
+  animation: pop 360ms ease;
+}
+
+.nl-map .state-region.wrong {
+  stroke: #c9463f !important;
+  stroke-width: 3 !important;
+  animation: shake 340ms ease;
+}
+
+.nl-map .state-region.hint {
+  stroke: #f2c85d !important;
+  stroke-width: 3 !important;
+  animation: pulse 900ms ease infinite;
+}
+
+.nl-map .state-region.typing-target {
+  stroke: #111820 !important;
+  stroke-width: 3.2 !important;
+  animation: pulse 1000ms ease infinite;
+}
+
+.nl-map .state-region.done {
+  stroke: #2f9f67 !important;
+  stroke-width: 1.6 !important;
 }
 
 .nl-map .river-line {
@@ -815,6 +868,11 @@ h2 {
 
 .state-label.region-3 {
   fill: #a67200;
+}
+
+.state-label.region-4 {
+  fill: #1f2c34;
+  stroke: rgba(255, 255, 255, 0.85);
 }
 
 .labels-hidden .state-label {

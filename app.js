@@ -25,6 +25,15 @@ const TOPICS = [
   { code: "rijn", name: "Rijn", short: "Rijn", letter: "3", cat: 3 },
   { code: "waal", name: "Waal", short: "Waal", letter: "4", cat: 3 },
   { code: "ijssel", name: "IJssel", short: "IJssel", letter: "5", cat: 3 },
+  // Landschappen (Fysisch Geografische Regio's, PDOK/RVO)
+  { code: "zeeklei", name: "Zeekleigebied", short: "Zeeklei", letter: "zk", cat: 4, multi: true },
+  { code: "rivierklei", name: "Rivierengebied", short: "Rivierklei", letter: "ri", cat: 4, multi: true },
+  { code: "laagveen", name: "Laagveengebied", short: "Laagveen", letter: "lv", cat: 4, multi: true },
+  { code: "duin", name: "Duinen", short: "Duinen", letter: "du", cat: 4, multi: true },
+  { code: "zand", name: "Hogere Zandgronden", short: "Zandgronden", letter: "hz", cat: 4, multi: true },
+  { code: "heuvelland", name: "Heuvelland", short: "Heuvelland", letter: "hl", cat: 4, multi: true },
+  { code: "zeearm", name: "Afgesloten Zeearmen", short: "Zeearmen", letter: "az", cat: 4, multi: true },
+  { code: "getijde", name: "Getijdengebied", short: "Getijdengebied", letter: "gg", cat: 4, multi: true },
 ];
 
 const sortedTopics = [...TOPICS].sort((a, b) => a.name.localeCompare(b.name));
@@ -35,7 +44,7 @@ const PLAYER_STORAGE_KEY = "nl-waterwerken-speler";
 const MODE_STORAGE_KEY = "nl-waterwerken-modus";
 const HARD_TOPICS_STORAGE_KEY = "nl-waterwerken-moeilijke-onderdelen";
 const SVG_NS = "http://www.w3.org/2000/svg";
-const APP_VERSION = "1.2.0";
+const APP_VERSION = "1.3.0";
 
 const batches = [
   {
@@ -52,6 +61,11 @@ const batches = [
     title: "Groep 3",
     label: "Rivieren",
     codes: TOPICS.filter((t) => t.cat === 3).map((t) => t.code),
+  },
+  {
+    title: "Groep 4",
+    label: "Landschappen",
+    codes: TOPICS.filter((t) => t.cat === 4).map((t) => t.code),
   },
 ].map((batch) => ({
   ...batch,
@@ -577,34 +591,38 @@ async function loadRealMap() {
     mapElements = new Map();
 
     TOPICS.forEach((topic) => {
-      const element = mapSvg.querySelector(`#${topic.code}`);
+      const elements = topic.multi
+        ? [...mapSvg.querySelectorAll(`.lz-${topic.code} path`)]
+        : [...mapSvg.querySelectorAll(`#${topic.code}`)];
 
-      if (!element) {
+      if (!elements.length) {
         return;
       }
 
-      element.classList.add("state", `region-${batchByCode.get(topic.code)}`);
-      element.setAttribute("tabindex", "0");
-      element.setAttribute("role", "button");
-      element.setAttribute("aria-label", topic.name);
-      element.setAttribute("data-code", topic.code);
-      element.setAttribute("data-name", topic.name);
-      element.setAttribute("data-region", String(batchByCode.get(topic.code)));
-      element.querySelector("title")?.remove();
+      elements.forEach((element) => {
+        element.classList.add(topic.multi ? "state-region" : "state", `region-${batchByCode.get(topic.code)}`);
+        element.setAttribute("tabindex", "0");
+        element.setAttribute("role", "button");
+        element.setAttribute("aria-label", topic.name);
+        element.setAttribute("data-code", topic.code);
+        element.setAttribute("data-name", topic.name);
+        element.setAttribute("data-region", String(batchByCode.get(topic.code)));
+        element.querySelector("title")?.remove();
 
-      const title = document.createElementNS(SVG_NS, "title");
-      title.textContent = topic.name;
-      element.prepend(title);
+        const title = document.createElementNS(SVG_NS, "title");
+        title.textContent = topic.name;
+        element.prepend(title);
 
-      element.addEventListener("click", () => answer(topic.code));
-      element.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          answer(topic.code);
-        }
+        element.addEventListener("click", () => answer(topic.code));
+        element.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            answer(topic.code);
+          }
+        });
       });
 
-      mapElements.set(topic.code, element);
+      mapElements.set(topic.code, elements);
     });
 
     addTopicLabels();
@@ -628,13 +646,20 @@ function addTopicLabels() {
   labelLayer.setAttribute("id", "topicLabels");
 
   TOPICS.forEach((topic) => {
-    const element = mapElements.get(topic.code);
-
-    if (!element) {
+    if (topic.multi) {
       return;
     }
 
-    const box = element.getBBox();
+    const elements = mapElements.get(topic.code);
+
+    if (!elements || !elements.length) {
+      return;
+    }
+
+    const boxes = elements.map((element) => element.getBBox());
+    const box = boxes.reduce((largest, current) =>
+      current.width * current.height > largest.width * largest.height ? current : largest
+    );
     const label = document.createElementNS(SVG_NS, "text");
     label.classList.add("state-label", `region-${batchByCode.get(topic.code)}`);
 
@@ -693,9 +718,9 @@ function renderStateList() {
 
 function renderMap() {
   TOPICS.forEach((topic) => {
-    const element = mapElements.get(topic.code);
+    const elements = mapElements.get(topic.code);
 
-    if (!element) {
+    if (!elements || !elements.length) {
       return;
     }
 
@@ -706,13 +731,15 @@ function renderMap() {
     const isTypingTarget =
       session.active && practiceMode === "type" && currentCode() === topic.code;
 
-    element.classList.toggle("selected", isSelected);
-    element.classList.toggle("dimmed", !isSelected && selected.size > 0);
-    element.classList.toggle("done", isDone);
-    element.classList.toggle("correct", isFeedback && feedback.type === "correct");
-    element.classList.toggle("wrong", isFeedback && feedback.type === "wrong");
-    element.classList.toggle("hint", isHint);
-    element.classList.toggle("typing-target", isTypingTarget);
+    elements.forEach((element) => {
+      element.classList.toggle("selected", isSelected);
+      element.classList.toggle("dimmed", !isSelected && selected.size > 0);
+      element.classList.toggle("done", isDone);
+      element.classList.toggle("correct", isFeedback && feedback.type === "correct");
+      element.classList.toggle("wrong", isFeedback && feedback.type === "wrong");
+      element.classList.toggle("hint", isHint);
+      element.classList.toggle("typing-target", isTypingTarget);
+    });
 
     const label = mapSvg?.querySelector(`.state-label[data-code="${topic.code}"]`);
     label?.classList.toggle("typing-target-label", isTypingTarget);
@@ -850,10 +877,9 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.getRegistrations().then((regs) => regs.forEach((r) => r.unregister()));
 }
 
-const versionEl = document.querySelector("#appVersion");
-if (versionEl) {
-  versionEl.textContent = `v${APP_VERSION}`;
-}
+document.querySelectorAll("#appVersion, #appVersionTop").forEach((el) => {
+  el.textContent = `v${APP_VERSION}`;
+});
 
 render();
 loadRealMap();
