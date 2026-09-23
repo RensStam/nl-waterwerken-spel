@@ -44,7 +44,7 @@ const PLAYER_STORAGE_KEY = "nl-waterwerken-speler";
 const MODE_STORAGE_KEY = "nl-waterwerken-modus";
 const HARD_TOPICS_STORAGE_KEY = "nl-waterwerken-moeilijke-onderdelen";
 const SVG_NS = "http://www.w3.org/2000/svg";
-const APP_VERSION = "1.4.1";
+const APP_VERSION = "1.5.0";
 
 const batches = [
   {
@@ -786,7 +786,9 @@ function renderStatus() {
   ui.typingMessage.textContent =
     typingMessage ||
     (session.active && practiceMode === "type"
-      ? "Typ de naam van het gemarkeerde onderdeel. Spelling mag een beetje afwijken."
+      ? activeTopic?.multi
+        ? "Typ de naam van het omrande landschapstype op de kaart. Spelling mag een beetje afwijken."
+        : "Typ de naam van het gemarkeerde onderdeel. Spelling mag een beetje afwijken."
       : "");
 
   if (session.active && activeTopic) {
@@ -794,7 +796,9 @@ function renderStatus() {
     ui.roundLabel.textContent = `${modeLabel} - ${session.index + 1} van ${session.order.length}`;
     ui.promptText.textContent =
       practiceMode === "type"
-        ? "Welk gemarkeerd onderdeel is dit?"
+        ? activeTopic.multi
+          ? "Welk landschapstype is omrand op de kaart?"
+          : "Welk gemarkeerd onderdeel is dit?"
         : `Zoek: ${activeTopic.name}`;
   } else if (session.order.length && session.index >= session.order.length) {
     ui.roundLabel.textContent = "Ronde klaar";

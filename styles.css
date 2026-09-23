@@ -1027,16 +1027,17 @@ h2 {
     justify-content: center;
     gap: 6px;
     width: 100%;
-    min-height: 40px;
+    min-height: 30px;
     border: none;
     border-bottom: 1px solid var(--line);
     background: var(--surface);
     color: var(--teal-dark);
     font-weight: 900;
+    font-size: 0.8rem;
   }
 
   body.round-fullscreen .nl-map {
-    min-height: calc(100vh - 260px);
+    min-height: calc(100vh - 165px);
   }
 
   body.round-fullscreen #shuffleBtn,
@@ -1047,19 +1048,51 @@ h2 {
   }
 
   body.round-fullscreen .quiz-bar {
-    padding: 8px 10px;
+    padding: 5px 8px;
+    gap: 5px;
+  }
+
+  body.round-fullscreen .game-actions {
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+
+  body.round-fullscreen .mode-control {
+    grid-column: auto;
+    min-height: 32px;
+  }
+
+  body.round-fullscreen .mode-control span {
+    font-size: 0.8rem;
+  }
+
+  body.round-fullscreen #startBtn {
+    min-height: 32px;
+    font-size: 0.82rem;
+    padding: 0 8px;
   }
 
   body.round-fullscreen .question-area {
-    padding: 9px 11px;
+    padding: 5px 9px;
+    border-left-width: 3px;
+  }
+
+  body.round-fullscreen .round-label {
+    margin: 0 0 1px;
+    font-size: 0.66rem;
   }
 
   body.round-fullscreen .quiz-bar h2 {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
+    line-height: 1.15;
+  }
+
+  body.round-fullscreen .typing-form {
+    margin-top: 5px;
   }
 
   body.round-fullscreen .map-shell {
-    padding: 6px;
+    padding: 4px;
   }
 
   .app-shell {
