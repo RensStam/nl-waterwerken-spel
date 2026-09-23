@@ -44,7 +44,7 @@ const PLAYER_STORAGE_KEY = "nl-waterwerken-speler";
 const MODE_STORAGE_KEY = "nl-waterwerken-modus";
 const HARD_TOPICS_STORAGE_KEY = "nl-waterwerken-moeilijke-onderdelen";
 const SVG_NS = "http://www.w3.org/2000/svg";
-const APP_VERSION = "1.5.0";
+const APP_VERSION = "1.5.1";
 
 const batches = [
   {
@@ -79,6 +79,7 @@ const ui = {
   batchGrid: document.querySelector("#batchGrid"),
   clearBtn: document.querySelector("#clearBtn"),
   exitFullscreenBtn: document.querySelector("#exitFullscreenBtn"),
+  exitFullscreenProgress: document.querySelector("#exitFullscreenProgress"),
   labelToggle: document.querySelector("#labelToggle"),
   mapGrid: document.querySelector("#mapGrid"),
   playerForm: document.querySelector("#playerForm"),
@@ -794,6 +795,9 @@ function renderStatus() {
   if (session.active && activeTopic) {
     const modeLabel = practiceMode === "type" ? "Typen" : "Klikken";
     ui.roundLabel.textContent = `${modeLabel} - ${session.index + 1} van ${session.order.length}`;
+    if (ui.exitFullscreenProgress) {
+      ui.exitFullscreenProgress.textContent = `${session.index + 1}/${session.order.length}`;
+    }
     ui.promptText.textContent =
       practiceMode === "type"
         ? activeTopic.multi
@@ -802,6 +806,9 @@ function renderStatus() {
         : `Zoek: ${activeTopic.name}`;
   } else if (session.order.length && session.index >= session.order.length) {
     ui.roundLabel.textContent = "Ronde klaar";
+    if (ui.exitFullscreenProgress) {
+      ui.exitFullscreenProgress.textContent = "klaar";
+    }
     if (session.isReview && needsPractice > 0) {
       ui.promptText.textContent = `Nog ${needsPractice} lastige over. Nog een keer?`;
     } else if (session.isReview) {
